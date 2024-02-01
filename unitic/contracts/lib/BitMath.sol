@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity 0.8.19;
+pragma solidity 0.7.6;
 
 // Copied from https://github.com/Uniswap/v4-core
 
@@ -15,7 +15,7 @@ library BitMath {
     function mostSignificantBit(uint256 x) internal pure returns (uint8 r) {
         require(x > 0);
 
-        unchecked {
+        // unchecked {
             if (x >= 0x100000000000000000000000000000000) {
                 x >>= 128;
                 r += 128;
@@ -45,7 +45,7 @@ library BitMath {
                 r += 2;
             }
             if (x >= 0x2) r += 1;
-        }
+        // }
     }
 
     /// @notice Returns the index of the least significant bit of the number,
@@ -57,7 +57,7 @@ library BitMath {
     function leastSignificantBit(uint256 x) internal pure returns (uint8 r) {
         require(x > 0);
 
-        unchecked {
+        // unchecked {
             r = 255;
             if (x & type(uint128).max > 0) {
                 r -= 128;
@@ -95,6 +95,6 @@ library BitMath {
                 x >>= 2;
             }
             if (x & 0x1 > 0) r -= 1;
-        }
+        // }
     }
 }

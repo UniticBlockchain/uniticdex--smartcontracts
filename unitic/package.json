@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "hardhat": "^2.19.4"
+  },
+  "dependencies": {
+    "hardhat-contract-sizer": "^2.10.0"
   }
 }

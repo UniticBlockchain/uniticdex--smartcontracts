@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity 0.8.19;
+pragma solidity 0.7.6;
 
 // Copied from https://github.com/Uniswap/v4-core
 
@@ -35,7 +35,7 @@ library SqrtPriceMath {
         uint256 numerator1 = uint256(liquidity) << FixedPoint96.RESOLUTION;
 
         if (add) {
-            unchecked {
+            // unchecked {
                 uint256 product;
                 if ((product = amount * sqrtPX96) / amount == sqrtPX96) {
                     uint256 denominator = numerator1 + product;
@@ -48,7 +48,7 @@ library SqrtPriceMath {
                         );
                     }
                 }
-            }
+            // }
             // denominator is checked for overflow
             return uint160(
                 UnsafeMath.divRoundingUp(
@@ -56,7 +56,7 @@ library SqrtPriceMath {
                 )
             );
         } else {
-            unchecked {
+            // unchecked {
                 uint256 product;
                 // if the product overflows, we know the denominator underflows
                 // in addition, we must check that the denominator does not underflow
@@ -68,7 +68,7 @@ library SqrtPriceMath {
                 return FullMath.mulDivRoundingUp(
                     numerator1, sqrtPX96, denominator
                 ).toUint160();
-            }
+            // }
         }
     }
 
@@ -179,7 +179,7 @@ library SqrtPriceMath {
         uint128 liquidity,
         bool roundUp
     ) internal pure returns (uint256 amount0) {
-        unchecked {
+        // unchecked {
             if (sqrtRatioAX96 > sqrtRatioBX96) {
                 (sqrtRatioAX96, sqrtRatioBX96) = (sqrtRatioBX96, sqrtRatioAX96);
             }
@@ -197,7 +197,7 @@ library SqrtPriceMath {
                 )
                 : FullMath.mulDiv(numerator1, numerator2, sqrtRatioBX96)
                     / sqrtRatioAX96;
-        }
+        // }
     }
 
     /// @notice Gets the amount1 delta between two prices
@@ -236,7 +236,7 @@ library SqrtPriceMath {
         uint160 sqrtRatioBX96,
         int128 liquidity
     ) internal pure returns (int256 amount0) {
-        unchecked {
+        // unchecked {
             // NOTE
             // liquidity < 0 = remove liquidity ---> round down amount to withdraw
             // liquidity > 0 = add liquidity    ---> round up amount required to deposit
@@ -247,7 +247,7 @@ library SqrtPriceMath {
                 : getAmount0Delta(
                     sqrtRatioAX96, sqrtRatioBX96, uint128(liquidity), true
                 ).toInt256();
-        }
+        // }
     }
 
     /// @notice Helper that gets signed currency1 delta
@@ -260,7 +260,7 @@ library SqrtPriceMath {
         uint160 sqrtRatioBX96,
         int128 liquidity
     ) internal pure returns (int256 amount1) {
-        unchecked {
+        // unchecked {
             // NOTE
             // liquidity < 0 = remove liquidity ---> round down amount to withdraw
             // liquidity > 0 = add liquidity    ---> round up amount required to deposit
@@ -271,6 +271,6 @@ library SqrtPriceMath {
                 : getAmount1Delta(
                     sqrtRatioAX96, sqrtRatioBX96, uint128(liquidity), true
                 ).toInt256();
-        }
+        // }
     }
 }

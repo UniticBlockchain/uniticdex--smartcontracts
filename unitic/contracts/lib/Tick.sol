@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: unlicensed
-pragma solidity 0.8.19;
+pragma solidity 0.7.6;
 
 import "./SafeCast.sol";
 import "./TickMath.sol";
@@ -45,7 +45,7 @@ library Tick {
         Info storage lower = self[tickLower];
         Info storage upper = self[tickUpper];
 
-        unchecked {
+        // unchecked {
             uint256 feeGrowthBelow0X128;
             uint256 feeGrowthBelow1X128;
             if (tickLower <= tickCurrent) {
@@ -68,7 +68,7 @@ library Tick {
 
             feeGrowthInside0X128 = feeGrowthGlobal0X128 - feeGrowthBelow0X128 - feeGrowthAbove0X128;
             feeGrowthInside1X128 = feeGrowthGlobal1X128 - feeGrowthBelow1X128 - feeGrowthAbove1X128;
-        }
+        // }
     }
 
     function update(

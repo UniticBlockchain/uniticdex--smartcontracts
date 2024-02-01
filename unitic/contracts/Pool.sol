@@ -1,5 +1,5 @@
 // SPDX license identifier: unlicensed
-pragma solidity 0.8.19;
+pragma solidity 0.7.6;
 
 import "./interfaces/IERC20.sol";
 import "./interfaces/IFactory.sol";
@@ -209,8 +209,7 @@ contract Pool {
     event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1);
 
     modifier lock() {
-        require(slot0.unlocked, 'LOK');
-        slot0.unlocked = false;
+        _lock();
         _;
         slot0.unlocked = true;
     }
@@ -220,6 +219,11 @@ contract Pool {
         _;
     }
 
+    function _lock() internal {
+        require(!slot0.unlocked, 'LOK');
+        slot0.unlocked = false;
+    }
+
     constructor(
         address _factory,
         address _token0,
@@ -227,15 +231,12 @@ contract Pool {
         uint24 _fee,
         int24 _tickSpacing
     ) {
-        require(_token0 != address(0), "token 0 = zero address");
-        require(_token0 < _token1, "token 0 >= token 1");
-
         factory = _factory;
         token0 = _token0;
         token1 = _token1;
         fee = _fee;
         tickSpacing = _tickSpacing;
-        maxLiquidityPerTick = Tick.tickSpacingToMaxLiquidityPerTick(tickSpacing);
+        maxLiquidityPerTick = Tick.tickSpacingToMaxLiquidityPerTick(_tickSpacing);
     }
 
     function initialize(uint160 sqrtPriceX96) external {

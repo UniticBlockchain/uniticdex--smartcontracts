@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity 0.8.19;
+pragma solidity 0.7.6;
 
 // Copied from https://github.com/Uniswap/v4-core
 
@@ -16,10 +16,10 @@ library UnsafeMath {
         pure
         returns (uint256 z)
     {
-        unchecked {
+        // unchecked {
             assembly {
                 z := add(div(x, y), gt(mod(x, y), 0))
             }
-        }
+        // }
     }
 }
