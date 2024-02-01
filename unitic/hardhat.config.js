@@ -2,6 +2,8 @@
 
 require('@nomiclabs/hardhat-ethers');
 
+require('hardhat-contract-sizer');
+
 module.exports.default = {
   networks: {
     hardhat: {
@@ -23,5 +25,10 @@ module.exports.default = {
         bytecodeHash: 'none',
       },
     },
+  },
+  contractSizer: {
+    alphaSort: false,
+    runOnCompile: true,
+    disambiguatePaths: false,
   },
 };
