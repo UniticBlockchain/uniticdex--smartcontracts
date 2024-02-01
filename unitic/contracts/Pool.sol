@@ -1,5 +1,5 @@
 // SPDX license identifier: unlicensed
-pragma solidity 0.8.19;
+pragma solidity =0.7.6;
 
 import "./interfaces/IERC20.sol";
 import "./interfaces/IFactory.sol";
@@ -235,7 +235,7 @@ contract Pool {
         token1 = _token1;
         fee = _fee;
         tickSpacing = _tickSpacing;
-        maxLiquidityPerTick = Tick.tickSpacingToMaxLiquidityPerTick(tickSpacing);
+        maxLiquidityPerTick = Tick.tickSpacingToMaxLiquidityPerTick(_tickSpacing);
     }
 
     function initialize(uint160 sqrtPriceX96) external {
